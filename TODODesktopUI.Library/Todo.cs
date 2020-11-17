@@ -9,5 +9,7 @@ namespace TODODesktopUI.Library
     public class Todo
     {
         public string Title { get; set; }
+        public bool IsChecked { get; set; }
+
     }
 }

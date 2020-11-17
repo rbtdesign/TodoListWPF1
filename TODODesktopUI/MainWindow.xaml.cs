@@ -21,31 +21,39 @@ namespace TODODesktopUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        Todo newTodoItem = new Todo();
         List<Todo> items = new List<Todo>();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            this.DataContext = newTodoItem;
+            // Load demo data
+            items.Add(new Todo() { Title = "Todo 1", IsChecked = true });
+            items.Add(new Todo() { Title = "Todo 2", IsChecked = false });
+            items.Add(new Todo() { Title = "Todo 3", IsChecked = true });
 
-            // Demo Data
-            items.Add(new Todo() { Title = "Todo 1" });
-            items.Add(new Todo() { Title = "Todo 2" });
-            items.Add(new Todo() { Title = "Todo 3" });
-
+            //Load initial data
             Todos.ItemsSource = items;
         }
+
+
 
         private void AddTodo(object sender, RoutedEventArgs e)
         {
-            string str = newTodoItem.Title;
-            items.Add(new Todo() { Title = str });
+            if( newTodo.Text.Trim() != "")
+            {
+                items.Add(new Todo() { Title = newTodo.Text });
 
-            //Refresh data
-            Todos.ItemsSource = null;
-            Todos.ItemsSource = items;
+                //Refresh data
+                Todos.ItemsSource = null;
+                Todos.ItemsSource = items;
+            } else
+            {
+                MessageBox.Show("Todo description is mandatory");
+            }
+
+          
         }
+
     }
 }

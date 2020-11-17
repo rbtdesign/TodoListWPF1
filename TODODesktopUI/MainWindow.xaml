@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TODODesktopUI"
         mc:Ignorable="d"
              Title="Todo List v1" Height="600" Width="500">
-    <Grid>
+    <Grid >
 
         <!-- Layout -->
 
@@ -33,7 +33,7 @@
 
         <!-- Row 1 : Todos -->
 
-        <ListBox Name="Todos"
+        <ListBox x:Name="Todos"
                  Grid.Row="1"
                  Grid.Column="1"
                  MinWidth="400"
@@ -43,7 +43,34 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Title}"/>
+
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsChecked}"
+                                  Margin="10 0" 
+                                  VerticalAlignment="Center"/>
+
+                        <TextBlock Text="{Binding Title}" 
+                                   FontSize="14" 
+                                   VerticalAlignment="Center">
+
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger 
+                                            Binding="{Binding IsChecked}" 
+                                            Value="True">
+                                            
+                                            <Setter Property="TextDecorations" 
+                                                    Value="Strikethrough" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                            
+                        </TextBlock>
+
+                    </StackPanel>
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
@@ -59,12 +86,13 @@
                     Grid.Column="1"
                     Margin="0 15">
 
-            <TextBox Name="newTodo" 
+            <TextBox x:Name="newTodo" 
                      MinWidth="350"
                      MinHeight="30"
                      FontSize="14"
                      VerticalContentAlignment="Center"
-                     Text="{Binding Title, Mode=TwoWay}"
+                     Text="{Binding newTodo.Title}"
+                     
                      />
 
             <Button x:Name="AddItem"
