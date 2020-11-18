@@ -28,9 +28,9 @@ namespace TODODesktopUI
             InitializeComponent();
 
             // Load demo data
-            items.Add(new Todo() { Title = "Todo 1", IsChecked = true });
-            items.Add(new Todo() { Title = "Todo 2", IsChecked = false });
-            items.Add(new Todo() { Title = "Todo 3", IsChecked = true });
+            items.Add(new Todo() { Title = "Todo 1", IsCompleted = true });
+            items.Add(new Todo() { Title = "Todo 2", IsCompleted = false });
+            items.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
 
             //Load initial data
             Todos.ItemsSource = items;
@@ -40,9 +40,9 @@ namespace TODODesktopUI
 
         private void AddTodo(object sender, RoutedEventArgs e)
         {
-            if( newTodo.Text.Trim() != "")
+            if( NewTodo.Text.Trim() != "")
             {
-                items.Add(new Todo() { Title = newTodo.Text });
+                items.Add(new Todo() { Title = NewTodo.Text });
 
                 //Refresh data
                 Todos.ItemsSource = null;
@@ -53,6 +53,19 @@ namespace TODODesktopUI
             }
 
           
+        }
+
+        private void RemoveTodo(object sender, RoutedEventArgs e)
+        {
+
+                items.Remove( (Todo)Todos.SelectedItem);
+                //Refresh data
+                Todos.ItemsSource = null;
+                Todos.ItemsSource = items;
+      
+
+
+
         }
 
     }
