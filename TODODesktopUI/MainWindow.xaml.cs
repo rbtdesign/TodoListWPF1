@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TODODesktopUI.Library;
+using TODODesktopUI.View;
 
 namespace TODODesktopUI
 {
@@ -47,6 +48,8 @@ namespace TODODesktopUI
                 //Refresh data
                 Todos.ItemsSource = null;
                 Todos.ItemsSource = items;
+
+                NewTodo.Text = String.Empty;
             } else
             {
                 MessageBox.Show("Todo description is mandatory");
@@ -57,16 +60,34 @@ namespace TODODesktopUI
 
         private void RemoveTodo(object sender, RoutedEventArgs e)
         {
-
                 items.Remove( (Todo)Todos.SelectedItem);
+
                 //Refresh data
                 Todos.ItemsSource = null;
                 Todos.ItemsSource = items;
-      
+        }
 
+        private void EditTodo(object sender, RoutedEventArgs e)
+        {
 
+            Todo value = (Todo)Todos.SelectedValue;
+
+            ModalWindow editWindow = new ModalWindow(value.Title);
+            editWindow.ShowDialog();
+
+            // Recover value from Modal 
+            string valueFromModal = ModalWindow.updatedTodo;
+
+            // Update the title
+            value.Title = valueFromModal;
+
+            //Refresh data
+            Todos.ItemsSource = null;
+            Todos.ItemsSource = items;
 
         }
+
+
 
     }
 }

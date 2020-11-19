@@ -12,4 +12,5 @@ namespace TODODesktopUI.Library
         public bool IsCompleted { get; set; }
 
     }
+
 }
