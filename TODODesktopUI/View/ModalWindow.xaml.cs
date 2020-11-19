@@ -24,12 +24,12 @@ namespace TODODesktopUI.View
         public ModalWindow(string oldTodo)
         {
             InitializeComponent();
-            editTodoBox.Text = oldTodo;
+            EditTodoBox.Text = oldTodo;
         }
 
-        private void btnUpdateTodo_Click(object sender, RoutedEventArgs e)
+        private void SaveNewTodo(object sender, RoutedEventArgs e)
         {
-            updatedTodo = editTodoBox.Text;
+            updatedTodo = EditTodoBox.Text;
             this.Close();
         }
 

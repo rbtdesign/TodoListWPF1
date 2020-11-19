@@ -23,12 +23,11 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBox x:Name="editTodoBox"
+        <TextBox x:Name="EditTodoBox"
                  Grid.Row="1"
                  Grid.Column="1"/>
-        
-        <Button x:Name="btnUpdateTodo" 
-                Click="btnUpdateTodo_Click" 
+
+        <Button Click="SaveNewTodo" 
                 Content="Save"
                 Grid.Row="3"
                 Grid.Column="1"/>
