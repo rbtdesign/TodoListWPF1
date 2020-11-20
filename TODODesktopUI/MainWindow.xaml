@@ -33,7 +33,7 @@
 
         <!-- Row 1 : Todos -->
 
-        <ListBox x:Name="Todos"
+        <!--<ListBox x:Name="Todos"
                  Grid.Row="1"
                  Grid.Column="1" MinWidth="400"
                  MinHeight="400"
@@ -66,7 +66,7 @@
                                    FontSize="14" 
                                    VerticalAlignment="Center">
                                 
-                            <!-- Special Styling of the textblock based on triggerred checkbox-->
+                            --><!-- Special Styling of the textblock based on triggerred checkbox--><!--
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Style.Triggers>
@@ -102,7 +102,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
-            <!-- Special Trigger to set hover item as selected to allow delete action to execute properly-->
+            --><!-- Special Trigger to set hover item as selected to allow delete action to execute properly--><!--
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>
@@ -116,7 +116,7 @@
 
         </ListBox>
 
-        <!-- Row 2 : Add Todo -->
+        --><!-- Row 2 : Add Todo --><!--
 
         <StackPanel Orientation="Horizontal"
                     Grid.Row="2"
@@ -139,7 +139,7 @@
                     Click="AddTodo" />
 
 
-        </StackPanel>
+        </StackPanel>-->
 
     </Grid>
 </Window>

@@ -34,58 +34,58 @@ namespace TODODesktopUI
             items.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
 
             //Load initial data
-            Todos.ItemsSource = items;
+           // Todos.ItemsSource = items;
         }
 
 
 
-        private void AddTodo(object sender, RoutedEventArgs e)
-        {
-            if( NewTodo.Text.Trim() != "")
-            {
-                items.Add(new Todo() { Title = NewTodo.Text });
+        //private void AddTodo(object sender, RoutedEventArgs e)
+        //{
+        //    if( NewTodo.Text.Trim() != "")
+        //    {
+        //        items.Add(new Todo() { Title = NewTodo.Text });
 
-                //Refresh data
-                Todos.ItemsSource = null;
-                Todos.ItemsSource = items;
+        //        //Refresh data
+        //        Todos.ItemsSource = null;
+        //        Todos.ItemsSource = items;
 
-                NewTodo.Text = String.Empty;
-            } else
-            {
-                MessageBox.Show("Todo description is mandatory");
-            }
+        //        NewTodo.Text = String.Empty;
+        //    } else
+        //    {
+        //        MessageBox.Show("Todo description is mandatory");
+        //    }
 
           
-        }
+        //}
 
-        private void RemoveTodo(object sender, RoutedEventArgs e)
-        {
-                items.Remove( (Todo)Todos.SelectedItem);
+        //private void RemoveTodo(object sender, RoutedEventArgs e)
+        //{
+        //        items.Remove( (Todo)Todos.SelectedItem);
 
-                //Refresh data
-                Todos.ItemsSource = null;
-                Todos.ItemsSource = items;
-        }
+        //        //Refresh data
+        //        Todos.ItemsSource = null;
+        //        Todos.ItemsSource = items;
+        //}
 
-        private void EditTodo(object sender, RoutedEventArgs e)
-        {
+        //private void EditTodo(object sender, RoutedEventArgs e)
+        //{
 
-            Todo value = (Todo)Todos.SelectedValue;
+        //    Todo value = (Todo)Todos.SelectedValue;
 
-            ModalWindow editWindow = new ModalWindow(value.Title);
-            editWindow.ShowDialog();
+        //    ModalWindow editWindow = new ModalWindow(value.Title);
+        //    editWindow.ShowDialog();
 
-            // Recover value from Modal 
-            string valueFromModal = ModalWindow.updatedTodo;
+        //    // Recover value from Modal 
+        //    string valueFromModal = ModalWindow.updatedTodo;
 
-            // Update the title
-            value.Title = valueFromModal;
+        //    // Update the title
+        //    value.Title = valueFromModal;
 
-            //Refresh data
-            Todos.ItemsSource = null;
-            Todos.ItemsSource = items;
+        //    //Refresh data
+        //    Todos.ItemsSource = null;
+        //    Todos.ItemsSource = items;
 
-        }
+        //}
 
 
 
