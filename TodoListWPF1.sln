@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODODesktopUI.Library", "TODODesktopUI.Library\TODODesktopUI.Library.csproj", "{1A742DCF-A90B-4830-861F-2FF2C52D44FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODODesktopUI", "TODODesktopUI\TODODesktopUI.csproj", "{D181CAC4-F361-4502-AD05-2DE4D3D1B391}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{1A742DCF-A90B-4830-861F-2FF2C52D44FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A742DCF-A90B-4830-861F-2FF2C52D44FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A742DCF-A90B-4830-861F-2FF2C52D44FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D181CAC4-F361-4502-AD05-2DE4D3D1B391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D181CAC4-F361-4502-AD05-2DE4D3D1B391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D181CAC4-F361-4502-AD05-2DE4D3D1B391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D181CAC4-F361-4502-AD05-2DE4D3D1B391}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
