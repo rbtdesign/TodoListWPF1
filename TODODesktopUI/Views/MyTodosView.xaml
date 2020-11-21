@@ -41,6 +41,7 @@
 
         <ListBox x:Name="MyTodolist"
                  ItemsSource="{Binding Todolist}"
+                 SelectedItem="{Binding SelectedTodo}"
                  Grid.Row="1"
                  Grid.Column="1"
                  MinWidth="400"
@@ -92,7 +93,8 @@
 
                         </TextBlock>
 
-                        <Button Command = "{Binding EditTodo}"
+                        <Button Command="{Binding DataContext.EditTodoCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                CommandParameter="{Binding Title}"
                                 Grid.Column="2"
                                 Content="Edit"
                                 MinWidth="40"
@@ -100,7 +102,7 @@
                                 Padding="5 0"
                                 Margin="5 0" />
 
-                        <Button Command="{Binding DeleteTodo}"
+                        <Button Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=ListBox} }"
                                 Grid.Column="3"
                                 Content="Delete"
                                 MinWidth="40"
@@ -112,8 +114,8 @@
             </ListBox.ItemTemplate>
 
             
-            <!-- Special Trigger to set hover item as selected to allow delete 
-                action to execute properly-->
+            <!-- Special Trigger to set hover item as selected item -->
+
             
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
@@ -138,13 +140,19 @@
                     Margin="0 15">
 
             <TextBox x:Name="NewTodo"
-                     Text="{Binding NewTodo}"
+                     Text="{Binding NewTodo, UpdateSourceTrigger=PropertyChanged}"
                      MinWidth="350"
                      MinHeight="30"
                      FontSize="14"
                      VerticalContentAlignment="Center"/>
 
-            <Button Command="{Binding AddTodo}"
+            <!-- Study Note : 
+            We add : UpdateSourceTrigger=PropertyChanged 
+            because otherwise the textbox is only updated when it loose focus by default 
+            and we need it to be updated at the first keystroke 
+            to enable the button via RaiseCanExecute -->
+
+            <Button Command="{Binding AddTodoCommand}"
                     Content="Add"
                     MinWidth="40"
                     MinHeight="30"
