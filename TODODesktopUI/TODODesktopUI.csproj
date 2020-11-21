@@ -90,7 +90,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TODODesktopUI.Library\TODODesktopUI.Library.csproj">
+      <Project>{1a742dcf-a90b-4830-861f-2ff2c52d44ff}</Project>
+      <Name>TODODesktopUI.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\MyTodosView.xaml">
       <SubType>Designer</SubType>
