@@ -39,6 +39,7 @@
 
         <!-- Row 1 : Todos -->
 
+    
         <ListBox x:Name="MyTodolist"
                  ItemsSource="{Binding Todolist}"
                  SelectedItem="{Binding SelectedTodo}"

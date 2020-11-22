@@ -8,6 +8,8 @@ using TODODesktopUI.Library;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Windows;
+using TODODesktopUI.Views;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace TODODesktopUI.ViewsModels
 {
@@ -18,7 +20,13 @@ namespace TODODesktopUI.ViewsModels
         public ObservableCollection<Todo> Todolist
         {
             get { return _todolist; }
-            set { _todolist = value; }
+            set 
+            { 
+                _todolist = value;
+                
+                RaisePropertyChanged("Title"); //Update Display when something change
+
+            }
         }
 
         private string _newTodo;
@@ -34,11 +42,25 @@ namespace TODODesktopUI.ViewsModels
 
             }
         }
-        public Todo SelectedTodo { get; set; }
+        // public Todo SelectedTodo { get; set; }
+
+        private Todo _selectedTodo;
+
+        public Todo SelectedTodo
+        {
+            get { return _selectedTodo; }
+            set { 
+                _selectedTodo = value;
+            }
+        }
+
+
+
 
         public RelayCommand AddTodoCommand { get; set; }
         public RelayCommand EditTodoCommand { get; set; }
         public RelayCommand DeleteTodoCommand { get; set; }
+        public RelayCommand<string> SaveEditTodoCommand { get; set; }
 
         public MyTodosViewModel()
         {
@@ -55,7 +77,7 @@ namespace TODODesktopUI.ViewsModels
             
             EditTodoCommand = new RelayCommand(EditTodo);
             DeleteTodoCommand = new RelayCommand(DeleteTodo);
-
+            SaveEditTodoCommand = new RelayCommand<string>((parameter) => SaveEditTodo(parameter));
         }
 
         private bool CanAddTodo()
@@ -76,9 +98,90 @@ namespace TODODesktopUI.ViewsModels
 
         private void EditTodo()
         {
-            MessageBox.Show("Next feature to be implemented");
+
+            Messenger.Default.Send(new NotificationMessage("ShowModal"));
+
+            //EditModalView editWindow = new EditModalView();
+            //editWindow.ShowDialog();
+            //Console.WriteLine(SelectedTodo.Title);
+
         }
 
-        
+       
+
+        private void SaveEditTodo(string parameter)
+
+        {
+
+            // Close window
+
+            // Update ObservableCollection
+
+           
+
+            // var item = Todolist.FirstOrDefault(x => x.Title == "Todo 1");
+            
+            // item.Title = parameter;
+
+
+
+            // RaisePropertyChanged("Title");
+
+            //Console.WriteLine(SelectedTodo.Title);
+        }
+
+
+
+
+
+
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    Todo value = (Todo)Todos.SelectedValue;
+
+//    ModalWindow editWindow = new ModalWindow(value.Title);
+//    editWindow.ShowDialog();
+
+//    // Recover value from Modal 
+//    string valueFromModal = ModalWindow.updatedTodo;
+
+//    // Update the title
+//    value.Title = valueFromModal;
+
+//    //Refresh data
+//    Todos.ItemsSource = null;
+//    Todos.ItemsSource = items;
+
+
+////EditModalView editTodoModal = new EditModalView();
+
+////editTodoModal.ShowDialog();
+
+//Messenger.Default.Send(new DialogMessage("test 4"));
+
+//Messenger.Default.Send(new NotificationMessage("ShowWindow"));

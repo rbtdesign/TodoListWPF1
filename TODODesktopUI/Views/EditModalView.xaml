@@ -1,0 +1,50 @@
+﻿<Window x:Class="TODODesktopUI.Views.EditModalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TODODesktopUI.ViewsModels"
+        mc:Ignorable="d"
+        Title="EditModalView" Height="150" Width="300">
+
+    <Window.DataContext>
+        <local:EditModalViewModel />
+    </Window.DataContext>
+
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+
+
+        <TextBox x:Name="EditTodoTxt"
+                 Text="{Binding SelectedTodo.Title, Mode=OneWay }"
+                 Grid.Row="1"
+                 Grid.Column="1" />
+
+        <!--Set the updatesourceTrigger to explicit to only update the SelectedTodo 
+        when we hit Save and not every time the textbox loose focus
+        
+        we removed explicit for mode one way because of mvvm patern-->
+
+        <Button Command="{Binding SaveEditTodoCommand}"
+                CommandParameter="{Binding Text, ElementName=EditTodoTxt }"
+                Content="Save"
+                Grid.Row="3"
+                Grid.Column="1" />
+
+
+    </Grid>
+</Window>

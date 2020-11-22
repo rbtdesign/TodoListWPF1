@@ -74,7 +74,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewsModels\EditModalViewModel.cs" />
     <Compile Include="ViewsModels\MyTodosViewModel.cs" />
+    <Compile Include="Views\EditModalView.xaml.cs">
+      <DependentUpon>EditModalView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyTodosView.xaml.cs">
       <DependentUpon>MyTodosView.xaml</DependentUpon>
     </Compile>
@@ -113,6 +117,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\EditModalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MyTodosView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
