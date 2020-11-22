@@ -24,7 +24,7 @@ namespace TODODesktopUI.ViewsModels
             { 
                 _todolist = value;
                 
-                RaisePropertyChanged("Title"); //Update Display when something change
+                //RaisePropertyChanged("Title"); 
 
             }
         }
@@ -53,8 +53,6 @@ namespace TODODesktopUI.ViewsModels
                 _selectedTodo = value;
             }
         }
-
-
 
 
         public RelayCommand AddTodoCommand { get; set; }
@@ -112,21 +110,21 @@ namespace TODODesktopUI.ViewsModels
         private void SaveEditTodo(string parameter)
 
         {
-
             // Close window
+                Messenger.Default.Send(new NotificationMessage("CloseModal"));
 
-            // Update ObservableCollection
-
-           
-
-            // var item = Todolist.FirstOrDefault(x => x.Title == "Todo 1");
-            
-            // item.Title = parameter;
+            // TODO :  Update ObservableCollection & find a way to identify correct todo that don't rely on SelectedItem
 
 
 
-            // RaisePropertyChanged("Title");
+                // Hack Remove and Add a new todo (only to setup a better way to identify current todo
+                // Todolist.Remove();
+                //Todolist.Add(new Todo { Title = parameter }); // Update Correctly
 
+
+
+            //var item = Todolist.FirstOrDefault(x => x.Title == "Todo 1");
+            //item.Title = parameter;
             //Console.WriteLine(SelectedTodo.Title);
         }
 

@@ -33,7 +33,9 @@ namespace TODODesktopUI.Views
                 var modalWindow = new EditModalView();
                 modalWindow.DataContext = this.DataContext;
                 modalWindow.ShowDialog();
+                
             }
+
         }
     }
 }

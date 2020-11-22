@@ -25,6 +25,16 @@ namespace TODODesktopUI.Views
         {
             InitializeComponent();
 
+            Messenger.Default.Register<NotificationMessage>(this, NotificationMessageReceived);
+
+        }
+
+        private void NotificationMessageReceived(NotificationMessage msg)
+        {
+            if (msg.Notification == "CloseModal")
+            {
+                this.Close();
+            }
         }
 
     }
