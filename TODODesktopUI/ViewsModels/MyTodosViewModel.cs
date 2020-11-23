@@ -16,26 +16,16 @@ namespace TODODesktopUI.ViewsModels
     class MyTodosViewModel : ViewModelBase
     {
 
-        private ObservableCollection<Todo> _todolist;
-        public ObservableCollection<Todo> Todolist
-        {
-            get { return _todolist; }
-            set 
-            { 
-                _todolist = value;
-                
-                //RaisePropertyChanged("Title"); 
-
-            }
-        }
+        public ObservableCollection<Todo> Todolist { get; set; }
 
         private string _newTodo;
         public string NewTodo
         {
             get { return _newTodo; }
-            set { 
+            set
+            {
                 _newTodo = value;
-                
+
                 RaisePropertyChanged();
 
                 AddTodoCommand.RaiseCanExecuteChanged();
@@ -44,19 +34,10 @@ namespace TODODesktopUI.ViewsModels
         }
         // public Todo SelectedTodo { get; set; }
 
-        private Todo _selectedTodo;
-
-        public Todo SelectedTodo
-        {
-            get { return _selectedTodo; }
-            set { 
-                _selectedTodo = value;
-            }
-        }
-
-
+        public Todo SelectedTodo { get; set; }
+        public Todo CurrentTodo { get; set; }
         public RelayCommand AddTodoCommand { get; set; }
-        public RelayCommand EditTodoCommand { get; set; }
+        public RelayCommand<Todo> EditTodoCommand { get; set; }
         public RelayCommand DeleteTodoCommand { get; set; }
         public RelayCommand<string> SaveEditTodoCommand { get; set; }
 
@@ -66,14 +47,14 @@ namespace TODODesktopUI.ViewsModels
             Todolist = new ObservableCollection<Todo>();
 
             // Load demo data
-            Todolist.Add(new Todo() { Title = "Todo 1", IsCompleted=true});
-            Todolist.Add(new Todo() { Title = "Todo 2", IsCompleted=false});
-            Todolist.Add(new Todo() { Title = "Todo 3", IsCompleted=true});
+            Todolist.Add(new Todo() { Title = "Todo 1", IsCompleted = true });
+            Todolist.Add(new Todo() { Title = "Todo 2", IsCompleted = false });
+            Todolist.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
 
-            // Load Command for Button actions
+            // Load Command for Buttons actions
             AddTodoCommand = new RelayCommand(AddTodo, CanAddTodo);
-            
-            EditTodoCommand = new RelayCommand(EditTodo);
+
+            EditTodoCommand = new RelayCommand<Todo>((currentTodo) => EditTodo(currentTodo));
             DeleteTodoCommand = new RelayCommand(DeleteTodo);
             SaveEditTodoCommand = new RelayCommand<string>((parameter) => SaveEditTodo(parameter));
         }
@@ -94,47 +75,33 @@ namespace TODODesktopUI.ViewsModels
             Todolist.Remove(SelectedTodo);
         }
 
-        private void EditTodo()
+        private void EditTodo(Todo currentTodo)
         {
+
+            CurrentTodo = currentTodo;
 
             Messenger.Default.Send(new NotificationMessage("ShowModal"));
 
             //EditModalView editWindow = new EditModalView();
+            //editWindow.DataContext = this;
             //editWindow.ShowDialog();
-            //Console.WriteLine(SelectedTodo.Title);
-
         }
-
-       
 
         private void SaveEditTodo(string parameter)
 
         {
             // Close window
-                Messenger.Default.Send(new NotificationMessage("CloseModal"));
-
-            // TODO :  Update ObservableCollection & find a way to identify correct todo that don't rely on SelectedItem
+            Messenger.Default.Send(new NotificationMessage("CloseModal"));
 
 
+            // Update Todo list - TEMP solution
+            CurrentTodo.Title = parameter;
 
-                // Hack Remove and Add a new todo (only to setup a better way to identify current todo
-                // Todolist.Remove();
-                //Todolist.Add(new Todo { Title = parameter }); // Update Correctly
+            Todolist.Remove(CurrentTodo);
+            Todolist.Add(CurrentTodo);
 
-
-
-            //var item = Todolist.FirstOrDefault(x => x.Title == "Todo 1");
-            //item.Title = parameter;
-            //Console.WriteLine(SelectedTodo.Title);
         }
-
-
-
-
-
-
     }
-
 }
 
 

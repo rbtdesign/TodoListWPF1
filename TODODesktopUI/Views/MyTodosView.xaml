@@ -95,7 +95,7 @@
                         </TextBlock>
 
                         <Button Command="{Binding DataContext.EditTodoCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                CommandParameter="{Binding Title}"
+                                CommandParameter="{Binding}"
                                 Grid.Column="2"
                                 Content="Edit"
                                 MinWidth="40"
@@ -116,8 +116,8 @@
 
             
             <!-- Special Trigger to set hover item as selected item -->
-
-            
+            <!--TODO : Should be replaced by passing the parameter in delete button & remove selectedTodo-->
+          
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>
@@ -147,7 +147,7 @@
                      FontSize="14"
                      VerticalContentAlignment="Center"/>
 
-            <!-- Study Note : 
+            <!-- Learning Note : 
             We add : UpdateSourceTrigger=PropertyChanged 
             because otherwise the textbox is only updated when it loose focus by default 
             and we need it to be updated at the first keystroke 

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,9 @@ using TODODesktopUI.Views;
 
 namespace TODODesktopUI.ViewsModels
 {
-    public class EditModalViewModel 
+    public class EditModalViewModel : ViewModelBase
     {
-        //public string TodoTitle { get; set; } = "test 9";
-        public EditModalViewModel()
-        {
-
-        }
-
-
-
+        // Not needed. Kept for ref.
+        // To be deleted
     }
 }
-
-
-

@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="EditModalView" Height="150" Width="300">
 
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <local:EditModalViewModel />
-    </Window.DataContext>
+    </Window.DataContext>-->
 
 
     <Grid>
@@ -30,14 +30,14 @@
 
 
         <TextBox x:Name="EditTodoTxt"
-                 Text="{Binding SelectedTodo.Title, Mode=OneWay }"
+                 Text="{Binding CurrentTodo.Title, Mode=OneWay}"
                  Grid.Row="1"
                  Grid.Column="1" />
 
-        <!--Set the updatesourceTrigger to explicit to only update the SelectedTodo 
+        <!-- Learning note : 
+        Set the updatesourceTrigger to explicit to only update the SelectedTodo 
         when we hit Save and not every time the textbox loose focus
-        
-        we removed explicit for mode one way because of mvvm patern-->
+        We removed explicit for mode one way because of mvvm patern -->
 
         <Button Command="{Binding SaveEditTodoCommand}"
                 CommandParameter="{Binding Text, ElementName=EditTodoTxt }"
