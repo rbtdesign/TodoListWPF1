@@ -145,7 +145,14 @@
                      MinWidth="350"
                      MinHeight="30"
                      FontSize="14"
-                     VerticalContentAlignment="Center"/>
+                     VerticalContentAlignment="Center">
+
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding AddTodoCommand}"
+                                Key="Enter" />
+                </TextBox.InputBindings>
+
+            </TextBox>
 
             <!-- Learning Note : 
             We add : UpdateSourceTrigger=PropertyChanged 
