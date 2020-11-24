@@ -74,6 +74,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\DialogService.cs" />
     <Compile Include="ViewsModels\EditModalViewModel.cs" />
     <Compile Include="ViewsModels\MyTodosViewModel.cs" />
     <Compile Include="Views\EditModalView.xaml.cs">

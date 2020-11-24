@@ -11,11 +11,11 @@ namespace TODODesktopUI.Library
     public class Todo 
     {
 
-        public bool IsCompleted { get; set; } = false;
-        public string Title { get; set; }
-        public static int Counter { get; set; }
         public int Id { get; set; }
+        public string Title { get; set; }
+        public bool IsCompleted { get; set; } = false;
 
+        public static int Counter { get; set; }
 
         public Todo()
         {
@@ -23,12 +23,19 @@ namespace TODODesktopUI.Library
             Id = Counter;
         }
 
-        public Todo(string description, bool status)
+        public Todo(string title, bool isCompleted = false)
         {
-            Title = description;
-            IsCompleted = status;
+            Title = title;
+            IsCompleted = isCompleted;
             Counter++;
             Id = Counter;
+        }
+
+        public Todo(Todo todo)
+        {
+            Title = todo.Title;
+            IsCompleted = todo.IsCompleted;
+            Id = todo.Id;
         }
 
     }

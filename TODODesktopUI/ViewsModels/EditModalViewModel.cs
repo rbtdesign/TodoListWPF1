@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using TODODesktopUI.Helpers;
 using TODODesktopUI.Library;
 using TODODesktopUI.Views;
 
@@ -14,7 +16,40 @@ namespace TODODesktopUI.ViewsModels
 {
     public class EditModalViewModel : ViewModelBase
     {
-        // Not needed. Kept for ref.
-        // To be deleted
+        private Todo _todo;
+        private Todo _returnedTodo;
+
+        private ICommand _saveEditTodoCommand;
+
+        public Todo Todo
+        {
+            get => _todo;
+            set => Set(ref _todo, value);
+        }
+
+        public Todo ReturnedTodo
+        {
+            get => _returnedTodo;
+            set => Set(ref _returnedTodo, value);
+        }
+
+        public ICommand SaveEditTodoCommand => _saveEditTodoCommand ?? (_saveEditTodoCommand = new RelayCommand(SaveEditTodo));
+
+        public EditModalViewModel()
+        {
+
+        }
+
+        public EditModalViewModel(Todo todo)
+        {
+            Todo = new Todo(todo);
+        }
+
+        private void SaveEditTodo()
+        {
+            _returnedTodo = new Todo(_todo);
+
+            SdbtDialogService.Instance.CloseEditModalView();
+        }
     }
 }

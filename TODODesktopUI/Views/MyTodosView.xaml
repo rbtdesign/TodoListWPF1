@@ -41,7 +41,7 @@
 
     
         <ListBox x:Name="MyTodolist"
-                 ItemsSource="{Binding Todolist}"
+                 ItemsSource="{Binding Todos}"
                  SelectedItem="{Binding SelectedTodo}"
                  Grid.Row="1"
                  Grid.Column="1"
@@ -104,6 +104,7 @@
                                 Margin="5 0" />
 
                         <Button Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=ListBox} }"
+                                CommandParameter="{Binding}"
                                 Grid.Column="3"
                                 Content="Delete"
                                 MinWidth="40"
@@ -141,7 +142,7 @@
                     Margin="0 15">
 
             <TextBox x:Name="NewTodo"
-                     Text="{Binding NewTodo, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding NewTodoTitle, UpdateSourceTrigger=PropertyChanged}"
                      MinWidth="350"
                      MinHeight="30"
                      FontSize="14"

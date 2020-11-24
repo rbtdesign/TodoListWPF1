@@ -10,97 +10,95 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using TODODesktopUI.Views;
 using GalaSoft.MvvmLight.Messaging;
+using System.Windows.Input;
+using TODODesktopUI.Helpers;
 
 namespace TODODesktopUI.ViewsModels
 {
     class MyTodosViewModel : ViewModelBase
     {
+        
+        private ObservableCollection<Todo> _todos;
+        private Todo _selectedTodo;
+        private string _newTodoTitle;
 
-        public ObservableCollection<Todo> Todolist { get; set; }
+        private ICommand _editTodoCommand;
+        private ICommand _deleteTodoCommand;
+        private ICommand _addTodoCommand;
 
-        private string _newTodo;
-        public string NewTodo
+        public ObservableCollection<Todo> Todos
         {
-            get { return _newTodo; }
-            set
-            {
-                _newTodo = value;
-
-                RaisePropertyChanged();
-
-                AddTodoCommand.RaiseCanExecuteChanged();
-
-            }
+            get => _todos;
+            set => Set(ref _todos, value);
         }
-        // public Todo SelectedTodo { get; set; }
 
-        public Todo SelectedTodo { get; set; }
-        public Todo CurrentTodo { get; set; }
-        public RelayCommand AddTodoCommand { get; set; }
-        public RelayCommand<Todo> EditTodoCommand { get; set; }
-        public RelayCommand DeleteTodoCommand { get; set; }
-        public RelayCommand<string> SaveEditTodoCommand { get; set; }
+        public Todo SelectedTodo
+        {
+            get => _selectedTodo;
+            set => Set(ref _selectedTodo, value);
+        }
+
+        public string NewTodoTitle
+        {
+            get => _newTodoTitle;
+            set => Set(ref _newTodoTitle, value);
+        }
+
+        public ICommand EditTodoCommand => _editTodoCommand ?? (_editTodoCommand = new RelayCommand<Todo>(EditTodo, true));
+
+        public ICommand DeleteTodoCommand => _deleteTodoCommand ?? (_deleteTodoCommand = new RelayCommand<Todo>(DeleteTodo, true));
+
+        public ICommand AddTodoCommand => _addTodoCommand ?? (_addTodoCommand = new RelayCommand(AddTodo, CanAddTodo));
 
         public MyTodosViewModel()
         {
             // Initialize instance of todolist
-            Todolist = new ObservableCollection<Todo>();
+            Todos = new ObservableCollection<Todo>();
 
             // Load demo data
-            Todolist.Add(new Todo() { Title = "Todo 1", IsCompleted = true });
-            Todolist.Add(new Todo() { Title = "Todo 2", IsCompleted = false });
-            Todolist.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
+            Todos.Add(new Todo() { Title = "Todo 1", IsCompleted = true });
+            Todos.Add(new Todo() { Title = "Todo 2", IsCompleted = false });
+            Todos.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
 
-            // Load Command for Buttons actions
-            AddTodoCommand = new RelayCommand(AddTodo, CanAddTodo);
-
-            EditTodoCommand = new RelayCommand<Todo>((currentTodo) => EditTodo(currentTodo));
-            DeleteTodoCommand = new RelayCommand(DeleteTodo);
-            SaveEditTodoCommand = new RelayCommand<string>((parameter) => SaveEditTodo(parameter));
         }
 
         private bool CanAddTodo()
         {
-            return !String.IsNullOrWhiteSpace(NewTodo);
+            // return !String.IsNullOrWhiteSpace(NewTodoTitle);
+            return true;
         }
 
         private void AddTodo()
         {
-            Todolist.Add(new Todo() { Title = NewTodo });
-            NewTodo = String.Empty;
+            Todos.Add(new Todo(_newTodoTitle)); // IMPORTANT : Shouldn't it be NewTodoTitle ?
+            NewTodoTitle = string.Empty;
         }
 
-        private void DeleteTodo()
+        private void DeleteTodo(Todo todo)
         {
-            Todolist.Remove(SelectedTodo);
+            Todos.Remove(todo);
         }
 
-        private void EditTodo(Todo currentTodo)
+        private EditModalView EditModalView { get; set; }
+
+        private void EditTodo(Todo todo)
         {
 
-            CurrentTodo = currentTodo;
+            var returnedTodo = SdbtDialogService.Instance.OpenEditModalView(todo);
 
-            Messenger.Default.Send(new NotificationMessage("ShowModal"));
+            if (returnedTodo != null)
+            {
+                var editedTodo = Todos.FirstOrDefault(t => t.Id == returnedTodo.Id);
+                if (todo != null)
+                {
+                    editedTodo.Title = returnedTodo.Title;
+                }
+                Todos = new ObservableCollection<Todo>(_todos);
 
-            //EditModalView editWindow = new EditModalView();
-            //editWindow.DataContext = this;
-            //editWindow.ShowDialog();
-        }
-
-        private void SaveEditTodo(string parameter)
-
-        {
-            // Close window
-            Messenger.Default.Send(new NotificationMessage("CloseModal"));
-
-
-            // Update Todo list - TEMP solution
-            CurrentTodo.Title = parameter;
-
-            Todolist.Remove(CurrentTodo);
-            Todolist.Add(CurrentTodo);
+            }
 
         }
+
     }
 }
 
@@ -121,32 +119,3 @@ namespace TODODesktopUI.ViewsModels
 
 
 
-
-
-
-
-
-
-//    Todo value = (Todo)Todos.SelectedValue;
-
-//    ModalWindow editWindow = new ModalWindow(value.Title);
-//    editWindow.ShowDialog();
-
-//    // Recover value from Modal 
-//    string valueFromModal = ModalWindow.updatedTodo;
-
-//    // Update the title
-//    value.Title = valueFromModal;
-
-//    //Refresh data
-//    Todos.ItemsSource = null;
-//    Todos.ItemsSource = items;
-
-
-////EditModalView editTodoModal = new EditModalView();
-
-////editTodoModal.ShowDialog();
-
-//Messenger.Default.Send(new DialogMessage("test 4"));
-
-//Messenger.Default.Send(new NotificationMessage("ShowWindow"));
