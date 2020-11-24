@@ -42,7 +42,7 @@
     
         <ListBox x:Name="MyTodolist"
                  ItemsSource="{Binding Todos}"
-                 SelectedItem="{Binding SelectedTodo}"
+                 
                  Grid.Row="1"
                  Grid.Column="1"
                  MinWidth="400"
@@ -117,9 +117,9 @@
 
             
             <!-- Special Trigger to set hover item as selected item -->
-            <!--TODO : Should be replaced by passing the parameter in delete button & remove selectedTodo-->
-          
-            <ListBox.ItemContainerStyle>
+            <!-- Keeping Code snippet for futur ref - To be deleted -->
+
+            <!--<ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -127,7 +127,7 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-            </ListBox.ItemContainerStyle>
+            </ListBox.ItemContainerStyle>-->
 
 
         </ListBox>

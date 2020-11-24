@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TODODesktopUI.Library;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows;
 using TODODesktopUI.Views;
 using GalaSoft.MvvmLight.Messaging;
@@ -41,13 +41,15 @@ namespace TODODesktopUI.ViewsModels
         public string NewTodoTitle
         {
             get => _newTodoTitle;
-            set => Set(ref _newTodoTitle, value);
+            set 
+            {
+                Set(ref _newTodoTitle, value);
+            }
+           
         }
 
         public ICommand EditTodoCommand => _editTodoCommand ?? (_editTodoCommand = new RelayCommand<Todo>(EditTodo, true));
-
         public ICommand DeleteTodoCommand => _deleteTodoCommand ?? (_deleteTodoCommand = new RelayCommand<Todo>(DeleteTodo, true));
-
         public ICommand AddTodoCommand => _addTodoCommand ?? (_addTodoCommand = new RelayCommand(AddTodo, CanAddTodo));
 
         public MyTodosViewModel()
@@ -64,13 +66,17 @@ namespace TODODesktopUI.ViewsModels
 
         private bool CanAddTodo()
         {
-            // return !String.IsNullOrWhiteSpace(NewTodoTitle);
-            return true;
+            return !String.IsNullOrWhiteSpace(_newTodoTitle);
+            //return true;
+        
+        
         }
 
         private void AddTodo()
         {
-            Todos.Add(new Todo(_newTodoTitle)); // IMPORTANT : Shouldn't it be NewTodoTitle ?
+            Todos.Add(new Todo(_newTodoTitle));
+            //Todos.Add(new Todo(NewTodoTitle));
+
             NewTodoTitle = string.Empty;
         }
 
