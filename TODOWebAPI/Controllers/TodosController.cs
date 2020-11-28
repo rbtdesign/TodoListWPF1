@@ -21,6 +21,13 @@ namespace TODOWebAPI.Controllers
             Todos.Add(new Todo() { Title = "Todo 4", IsCompleted = true });
         }
 
+        // You can precise Route with 
+        // [Route("api/Todos/GetXXX")] // Apply on the following command, names don't have to match
+        // [HttpGet] // Precise the type of command it accept
+        // [Route("api/Todos/GetXXX/{userId:int"/{age:int})] // Add parameter
+
+
+
 
         // GET: api/Todos
         public List<Todo> Get()

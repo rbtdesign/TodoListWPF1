@@ -23,19 +23,19 @@ namespace TODODesktopUI.Views
         public MyTodosView()
         {
             InitializeComponent();
-            Messenger.Default.Register<NotificationMessage>(this,NotificationMessageReceived);
+           // Messenger.Default.Register<NotificationMessage>(this,NotificationMessageReceived);
         }
 
-        private void NotificationMessageReceived(NotificationMessage msg)
-        {
-            if (msg.Notification == "ShowModal")
-            {
-                var modalWindow = new EditModalView();
-                modalWindow.DataContext = this.DataContext;
-                modalWindow.ShowDialog();
+        //private void NotificationMessageReceived(NotificationMessage msg)
+        //{
+        //    if (msg.Notification == "ShowModal")
+        //    {
+        //        var modalWindow = new EditModalView();
+        //        modalWindow.DataContext = this.DataContext;
+        //        modalWindow.ShowDialog();
 
-            }
+        //    }
 
-        }
+        //}
     }
 }

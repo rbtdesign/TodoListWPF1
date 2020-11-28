@@ -12,6 +12,7 @@ using TODODesktopUI.Views;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
 using TODODesktopUI.Helpers;
+using TODODesktopUI.Models;
 
 namespace TODODesktopUI.ViewsModels
 {
@@ -57,12 +58,24 @@ namespace TODODesktopUI.ViewsModels
             // Initialize instance of todolist
             Todos = new ObservableCollection<Todo>();
 
+            // Initialize http client 
+            ApiService.InitializeClient();
+
             // Load demo data
-            Todos.Add(new Todo() { Title = "Todo 1", IsCompleted = true });
-            Todos.Add(new Todo() { Title = "Todo 2", IsCompleted = false });
-            Todos.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
+            //Todos.Add(new Todo() { Title = "Todo 1", IsCompleted = true });
+            //Todos.Add(new Todo() { Title = "Todo 2", IsCompleted = false });
+            //Todos.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
 
         }
+
+
+        private async void LoadData()
+        {
+            var todo = await TodosProcessor.LoadTodo(2);
+
+            Todos.Add(todo);
+        }
+
 
         private bool CanAddTodo()
         {
