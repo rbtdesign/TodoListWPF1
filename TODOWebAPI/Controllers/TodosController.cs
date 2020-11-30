@@ -12,13 +12,14 @@ namespace TODOWebAPI.Controllers
     {
         // Demo data Initialization
         List<Todo> Todos = new List<Todo>();
+        private static int count = 4;
 
         public TodosController()
         {
-            Todos.Add(new Todo() { Title = "Todo 1", IsCompleted = true });
-            Todos.Add(new Todo() { Title = "Todo 2", IsCompleted = false });
-            Todos.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
-            Todos.Add(new Todo() { Title = "Todo 4", IsCompleted = true });
+            Todos.Add(new Todo() { Title = "Todo 1", Id = 1, IsCompleted = true });
+            Todos.Add(new Todo() { Title = "Todo 2", Id = 2, IsCompleted = false });
+            Todos.Add(new Todo() { Title = "Todo 3", Id = 3, IsCompleted = true });
+            Todos.Add(new Todo() { Title = "Todo 4", Id = 4, IsCompleted = true });
         }
 
         // You can precise Route with 
@@ -35,20 +36,24 @@ namespace TODOWebAPI.Controllers
             return Todos;
         }
 
-        // GET: api/Todos/5
+        //GET: api/Todos/5
         public Todo Get(int id)
         {
             return Todos.Where(x => x.Id == id).FirstOrDefault();
         }
 
         // POST: api/Todos
-        public void Post(Todo val)
+        public Todo Post([FromBody]string title)
         {
+            // Logic to verify title
 
-            // Verify val is correct 
-            //val = newtodotitle
+            count++; // Increase counter for fake ID
 
-            Todos.Add(val);
+            Todo todo = new Todo() { Title = title, Id = count };
+
+            Todos.Add(todo); // Add to fake DB
+
+            return todo;
         }
 
         // PUT: api/Todos/5
@@ -57,9 +62,9 @@ namespace TODOWebAPI.Controllers
         }
 
         // DELETE: api/Todos/5
-        public void Delete(Todo val)
+        public void Delete(int id)
         {
-            Todos.Remove(val);
+            Todos.Remove(Todos.Where(x => x.Id == id).FirstOrDefault());
         }
     }
 }

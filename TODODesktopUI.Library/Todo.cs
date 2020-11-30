@@ -19,16 +19,13 @@ namespace TODODesktopUI.Library
 
         public Todo()
         {
-            Counter++;
-            Id = Counter;
+
         }
 
-        public Todo(string title, bool isCompleted = false)
+        public Todo(string title, int id)
         {
             Title = title;
-            IsCompleted = isCompleted;
-            Counter++;
-            Id = Counter;
+            Id = id;
         }
 
         public Todo(Todo todo)

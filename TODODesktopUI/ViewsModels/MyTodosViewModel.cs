@@ -61,19 +61,15 @@ namespace TODODesktopUI.ViewsModels
             // Initialize http client 
             ApiService.InitializeClient();
 
-            // Load demo data
-            //Todos.Add(new Todo() { Title = "Todo 1", IsCompleted = true });
-            //Todos.Add(new Todo() { Title = "Todo 2", IsCompleted = false });
-            //Todos.Add(new Todo() { Title = "Todo 3", IsCompleted = true });
-
+            //Fetch inital data
+            LoadTodos();
         }
 
 
-        private async void LoadData()
+        private async void LoadTodos()
         {
-            var todo = await TodosProcessor.LoadTodo(2);
-
-            Todos.Add(todo);
+            var data = await TodosProcessor.GetAll();
+            Todos = new ObservableCollection<Todo>(data);
         }
 
 
@@ -81,21 +77,22 @@ namespace TODODesktopUI.ViewsModels
         {
             return !String.IsNullOrWhiteSpace(_newTodoTitle);
             //return true;
-        
-        
         }
 
-        private void AddTodo()
+        private async void AddTodo()
         {
-            Todos.Add(new Todo(_newTodoTitle));
-            //Todos.Add(new Todo(NewTodoTitle));
+            Todo todo = await TodosProcessor.Create(_newTodoTitle);
 
+            Todos.Add(todo);
             NewTodoTitle = string.Empty;
+       
         }
 
-        private void DeleteTodo(Todo todo)
+        private async void DeleteTodo(Todo todo)
         {
-            Todos.Remove(todo);
+            bool isDeleted = await TodosProcessor.Delete(todo.Id);
+            if (isDeleted)
+                Todos.Remove(todo);
         }
 
         private EditModalView EditModalView { get; set; }
