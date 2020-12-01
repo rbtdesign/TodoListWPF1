@@ -56,6 +56,33 @@ namespace TODODesktopUI.Models
             }
         }
 
+        public static async Task<List<Todo>> Update(Todo todo)
+        {
+            string url = "api/todos/";
+
+            // Convert string to HttpContent
+            string json = JsonConvert.SerializeObject(todo);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using (HttpResponseMessage response = await ApiService.ApiClient.PutAsync(url, stringContent) )
+            {
+
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Todo> todolist = await response.Content.ReadAsAsync<List<Todo>>();
+
+                    return todolist;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+
+
+
 
         public static async Task<bool> Delete(int id)
         {

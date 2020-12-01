@@ -97,19 +97,15 @@ namespace TODODesktopUI.ViewsModels
 
         private EditModalView EditModalView { get; set; }
 
-        private void EditTodo(Todo todo)
+        private async void EditTodo(Todo todo)
         {
 
-            var returnedTodo = SdbtDialogService.Instance.OpenEditModalView(todo);
+            var returnedTodo = DialogService.Instance.OpenEditModalView(todo);
 
             if (returnedTodo != null)
             {
-                var editedTodo = Todos.FirstOrDefault(t => t.Id == returnedTodo.Id);
-                if (todo != null)
-                {
-                    editedTodo.Title = returnedTodo.Title;
-                }
-                Todos = new ObservableCollection<Todo>(_todos);
+                var todolist = await TodosProcessor.Update(returnedTodo);
+                Todos = new ObservableCollection<Todo>(todolist);
 
             }
 

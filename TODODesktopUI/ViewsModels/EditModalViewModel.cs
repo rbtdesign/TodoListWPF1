@@ -49,7 +49,7 @@ namespace TODODesktopUI.ViewsModels
         {
             _returnedTodo = new Todo(_todo);
 
-            SdbtDialogService.Instance.CloseEditModalView();
+            DialogService.Instance.CloseEditModalView();
         }
     }
 }

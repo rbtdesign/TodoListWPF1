@@ -57,8 +57,16 @@ namespace TODOWebAPI.Controllers
         }
 
         // PUT: api/Todos/5
-        public void Put(int id, [FromBody]string value)
+        public List<Todo> Put([FromBody]Todo todo)
         {
+
+            var editedTodo = Todos.FirstOrDefault(t => t.Id == todo.Id);
+            if (todo != null)
+            {
+                editedTodo.Title = todo.Title;
+            }
+
+            return Todos;
         }
 
         // DELETE: api/Todos/5

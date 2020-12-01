@@ -9,19 +9,19 @@ using TODODesktopUI.ViewsModels;
 
 namespace TODODesktopUI.Helpers
 {
-    public class SdbtDialogService
+    public class DialogService
     {
 
-        private static volatile SdbtDialogService _instance;
+        private static volatile DialogService _instance;
         private static object _syncroot = new object();
         private EditModalView EditModalView { get; set; }
 
-        private SdbtDialogService()
+        private DialogService()
         {
 
         }
 
-        public static SdbtDialogService Instance
+        public static DialogService Instance
         {
             get
             {
@@ -31,7 +31,7 @@ namespace TODODesktopUI.Helpers
                     {
                         if (_instance == null)
                         {
-                            _instance = new SdbtDialogService();
+                            _instance = new DialogService();
                         }
                     }
                 }
