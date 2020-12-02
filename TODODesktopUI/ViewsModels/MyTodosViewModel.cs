@@ -12,16 +12,16 @@ using TODODesktopUI.Views;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
 using TODODesktopUI.Helpers;
-using TODODesktopUI.Models;
+using TODODesktopUI.Services;
 
 namespace TODODesktopUI.ViewsModels
 {
     class MyTodosViewModel : ViewModelBase
     {
-        
         private ObservableCollection<Todo> _todos;
-        private Todo _selectedTodo;
         private string _newTodoTitle;
+
+        private readonly TodosService _todosService;
 
         private ICommand _editTodoCommand;
         private ICommand _deleteTodoCommand;
@@ -33,20 +33,10 @@ namespace TODODesktopUI.ViewsModels
             set => Set(ref _todos, value);
         }
 
-        public Todo SelectedTodo
-        {
-            get => _selectedTodo;
-            set => Set(ref _selectedTodo, value);
-        }
-
         public string NewTodoTitle
         {
             get => _newTodoTitle;
-            set 
-            {
-                Set(ref _newTodoTitle, value);
-            }
-           
+            set => Set(ref _newTodoTitle, value);
         }
 
         public ICommand EditTodoCommand => _editTodoCommand ?? (_editTodoCommand = new RelayCommand<Todo>(EditTodo, true));
@@ -55,23 +45,26 @@ namespace TODODesktopUI.ViewsModels
 
         public MyTodosViewModel()
         {
-            // Initialize instance of todolist
-            Todos = new ObservableCollection<Todo>();
+
+            // TodosService todosService >> keep for DI
 
             // Initialize http client 
-            ApiService.InitializeClient();
+            ApiHelper.InitializeClient();
+
+            // Instancie Todoprocessor
+            //_todosService = todosService;
+            _todosService = new TodosService();
 
             //Fetch inital data
-            LoadTodos();
+            GetTodos();
         }
 
 
-        private async void LoadTodos()
+        private async void GetTodos()
         {
-            var data = await TodosProcessor.GetAll();
-            Todos = new ObservableCollection<Todo>(data);
+            var todolist = await _todosService.GetAll();
+            Todos = new ObservableCollection<Todo>(todolist);
         }
-
 
         private bool CanAddTodo()
         {
@@ -81,7 +74,7 @@ namespace TODODesktopUI.ViewsModels
 
         private async void AddTodo()
         {
-            Todo todo = await TodosProcessor.Create(_newTodoTitle);
+            Todo todo = await _todosService.Create(_newTodoTitle);
 
             Todos.Add(todo);
             NewTodoTitle = string.Empty;
@@ -90,13 +83,11 @@ namespace TODODesktopUI.ViewsModels
 
         private async void DeleteTodo(Todo todo)
         {
-            bool isDeleted = await TodosProcessor.Delete(todo.Id);
-            if (isDeleted)
+            bool isConfirmed = await _todosService.Delete(todo.Id);
+            if (isConfirmed)
                 Todos.Remove(todo);
         }
-
-        private EditModalView EditModalView { get; set; }
-
+        //private EditModalView EditModalView { get; set; }
         private async void EditTodo(Todo todo)
         {
 
@@ -104,9 +95,8 @@ namespace TODODesktopUI.ViewsModels
 
             if (returnedTodo != null)
             {
-                var todolist = await TodosProcessor.Update(returnedTodo);
+                var todolist = await _todosService.Update(returnedTodo);
                 Todos = new ObservableCollection<Todo>(todolist);
-
             }
 
         }

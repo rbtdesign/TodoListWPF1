@@ -11,10 +11,10 @@ namespace TODOWebAPI.Controllers
     public class TodosController : ApiController
     {
         // Demo data Initialization
-        List<Todo> Todos = new List<Todo>();
+        private static List<Todo> Todos = new List<Todo>();
         private static int count = 4;
 
-        public TodosController()
+        static TodosController()
         {
             Todos.Add(new Todo() { Title = "Todo 1", Id = 1, IsCompleted = true });
             Todos.Add(new Todo() { Title = "Todo 2", Id = 2, IsCompleted = false });
@@ -26,8 +26,6 @@ namespace TODOWebAPI.Controllers
         // [Route("api/Todos/GetXXX")] // Apply on the following command, names don't have to match
         // [HttpGet] // Precise the type of command it accept
         // [Route("api/Todos/GetXXX/{userId:int"/{age:int})] // Add parameter
-
-
 
 
         // GET: api/Todos
@@ -43,29 +41,27 @@ namespace TODOWebAPI.Controllers
         }
 
         // POST: api/Todos
-        public Todo Post([FromBody]string title)
+        public Todo Post([FromBody] string title)
         {
             // Logic to verify title
 
+            // Logic to add new todo to fake db
             count++; // Increase counter for fake ID
-
             Todo todo = new Todo() { Title = title, Id = count };
-
             Todos.Add(todo); // Add to fake DB
 
             return todo;
+
         }
 
         // PUT: api/Todos/5
-        public List<Todo> Put([FromBody]Todo todo)
+        public List<Todo> Put([FromBody] Todo todo)
         {
-
             var editedTodo = Todos.FirstOrDefault(t => t.Id == todo.Id);
-            if (todo != null)
-            {
-                editedTodo.Title = todo.Title;
-            }
 
+            if (todo != null)
+                editedTodo.Title = todo.Title;
+            
             return Todos;
         }
 

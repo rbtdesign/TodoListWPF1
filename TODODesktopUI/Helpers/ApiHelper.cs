@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TODODesktopUI.Helpers
 {
-    public static class ApiService
+    public static class ApiHelper
     {
         public static HttpClient ApiClient { get; set; }
 

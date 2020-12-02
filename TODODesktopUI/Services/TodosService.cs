@@ -8,16 +8,20 @@ using System.Threading.Tasks;
 using TODODesktopUI.Helpers;
 using TODODesktopUI.Library;
 
-namespace TODODesktopUI.Models
+namespace TODODesktopUI.Services
 {
-    public class TodosProcessor
+    public class TodosService : ITodosService
     {
 
-        public static async Task<List<Todo>> GetAll()
+        static TodosService()
+        {
+        }
+
+        public async Task<List<Todo>> GetAll()
         {
             string url = "api/todos/";
 
-            using (HttpResponseMessage response = await ApiService.ApiClient.GetAsync(url))
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -32,7 +36,7 @@ namespace TODODesktopUI.Models
             }
         }
 
-        public static async Task<Todo> Create(string todoTitle)
+        public async Task<Todo> Create(string todoTitle)
         {
             string url = "api/todos/";
 
@@ -40,7 +44,7 @@ namespace TODODesktopUI.Models
             string json = JsonConvert.SerializeObject(todoTitle);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using (HttpResponseMessage response = await ApiService.ApiClient.PostAsync(url, stringContent))
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.PostAsync(url, stringContent))
             {
 
                 if (response.IsSuccessStatusCode)
@@ -56,7 +60,7 @@ namespace TODODesktopUI.Models
             }
         }
 
-        public static async Task<List<Todo>> Update(Todo todo)
+        public async Task<List<Todo>> Update(Todo todo)
         {
             string url = "api/todos/";
 
@@ -64,7 +68,7 @@ namespace TODODesktopUI.Models
             string json = JsonConvert.SerializeObject(todo);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using (HttpResponseMessage response = await ApiService.ApiClient.PutAsync(url, stringContent) )
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.PutAsync(url, stringContent))
             {
 
                 if (response.IsSuccessStatusCode)
@@ -80,15 +84,11 @@ namespace TODODesktopUI.Models
             }
         }
 
-
-
-
-
-        public static async Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             string url = $"api/todos/{id}";
 
-            using (HttpResponseMessage response = await ApiService.ApiClient.DeleteAsync(url))
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.DeleteAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {

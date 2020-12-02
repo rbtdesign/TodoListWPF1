@@ -80,9 +80,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\ApiService.cs" />
+    <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\DialogService.cs" />
-    <Compile Include="Models\TodosProcessor.cs" />
+    <Compile Include="Services\ITodosService.cs" />
+    <Compile Include="Services\TodosService.cs" />
     <Compile Include="ViewsModels\EditModalViewModel.cs" />
     <Compile Include="ViewsModels\MyTodosViewModel.cs" />
     <Compile Include="Views\EditModalView.xaml.cs">

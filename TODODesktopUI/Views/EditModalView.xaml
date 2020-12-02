@@ -30,9 +30,18 @@
 
 
         <TextBox x:Name="EditTodoTxt"
-                 Text="{Binding Todo.Title}"
+                 Text="{Binding Todo.Title, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="1"
-                 Grid.Column="1" />
+                 Grid.Column="1">
+            
+            <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding SaveEditTodoCommand}"
+                                CommandParameter="{Binding Text}"
+                                Key="Enter" />
+            </TextBox.InputBindings>
+            
+        </TextBox>
+
 
         <Button Command="{Binding SaveEditTodoCommand}"
                 CommandParameter="{Binding Text, ElementName=EditTodoTxt }"
