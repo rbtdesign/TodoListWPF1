@@ -35,10 +35,6 @@ namespace TODODesktopUI.ViewsModels
 
         public ICommand SaveEditTodoCommand => _saveEditTodoCommand ?? (_saveEditTodoCommand = new RelayCommand(SaveEditTodo));
 
-        public EditModalViewModel()
-        {
-
-        }
 
         public EditModalViewModel(Todo todo)
         {

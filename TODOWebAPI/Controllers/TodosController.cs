@@ -31,44 +31,102 @@ namespace TODOWebAPI.Controllers
         // GET: api/Todos
         public List<Todo> Get()
         {
-            return Todos;
+
+            if (Todos == null)
+            {
+                var message = string.Format("No todos found");
+
+                // HttpResponseException allos us to still be able to return a strong typed model
+                throw new HttpResponseException(
+                    Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+            }
+            else
+            {
+                return Todos;
+            }
         }
 
         //GET: api/Todos/5
-        public Todo Get(int id)
+        public HttpResponseMessage Get(int id)
         {
-            return Todos.Where(x => x.Id == id).FirstOrDefault();
+
+            var item = Todos.Where(x => x.Id == id).FirstOrDefault();
+
+            if (item == null)
+            {
+                var message = string.Format("Product with id = {0} not found", id);
+                HttpError err = new HttpError(message);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, err);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, item);
+            }
         }
 
         // POST: api/Todos
-        public Todo Post([FromBody] string title)
+        public HttpResponseMessage Post([FromBody] string title)
         {
             // Logic to verify title
 
-            // Logic to add new todo to fake db
-            count++; // Increase counter for fake ID
-            Todo todo = new Todo() { Title = title, Id = count };
-            Todos.Add(todo); // Add to fake DB
+            if (String.IsNullOrEmpty(title))
+            {
+                var message = string.Format("Title of todo cannot be null or empty ");
+                HttpError err = new HttpError(message);
 
-            return todo;
+                return Request.CreateResponse(HttpStatusCode.BadRequest, err);
+            }
+            else
+            {
+                // Logic to add new todo to fake db
+                count++; // Increase counter for fake ID
+                Todo todo = new Todo() { Title = title, Id = count };
+                Todos.Add(todo); // Add to fake DB
 
+                return Request.CreateResponse(HttpStatusCode.OK, todo);
+            }
         }
 
-        // PUT: api/Todos/5
+        // PUT: api/Todos
         public List<Todo> Put([FromBody] Todo todo)
         {
+
             var editedTodo = Todos.FirstOrDefault(t => t.Id == todo.Id);
 
-            if (todo != null)
+            if (editedTodo == default)
+            {
+                var message = string.Format("Todo with id = {0} was not updated", todo.Id);
+
+                throw new HttpResponseException(
+                    Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+            }
+            else
+            {
                 editedTodo.Title = todo.Title;
-            
-            return Todos;
+
+                return Todos;
+            }
+
         }
 
         // DELETE: api/Todos/5
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
-            Todos.Remove(Todos.Where(x => x.Id == id).FirstOrDefault());
+            var isDeleted = Todos.Remove(Todos.Where(x => x.Id == id).FirstOrDefault());
+
+            if (isDeleted)
+            {
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                var message = string.Format("Todo with id = {0} was not deleted", id);
+                HttpError err = new HttpError(message);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, err);
+            }
+
         }
     }
 }

@@ -17,7 +17,7 @@ namespace TODODesktopUI.Helpers
             ApiClient = new HttpClient();
             ApiClient.BaseAddress = new Uri("https://localhost:44339/"); 
             ApiClient.DefaultRequestHeaders.Accept.Clear(); 
-            ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); // Add header to request json format.
+            ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); 
         }
     }
 }

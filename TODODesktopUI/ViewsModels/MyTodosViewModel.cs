@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TODODesktopUI.Library;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using System.Windows;
-using TODODesktopUI.Views;
-using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
 using TODODesktopUI.Helpers;
 using TODODesktopUI.Services;
@@ -45,20 +38,13 @@ namespace TODODesktopUI.ViewsModels
 
         public MyTodosViewModel(ITodosService todosService)
         {
-
-            // ITodosService todosService >> keep for DI
-
             // Initialize http client 
             ApiHelper.InitializeClient();
 
-            // Instancie todosService with DI
-            // Alternative : _todosService = new TodosService();
             _todosService = todosService;
 
-            //Fetch inital data
             GetTodos();
         }
-
 
         private async void GetTodos()
         {
@@ -96,7 +82,6 @@ namespace TODODesktopUI.ViewsModels
 
         private async void EditTodo(Todo todo)
         {
-
             var returnedTodo = DialogService.Instance.OpenEditModalView(todo);
 
             if (returnedTodo != null)
