@@ -104,6 +104,7 @@ namespace TODOWebAPI.Controllers
             else
             {
                 editedTodo.Title = todo.Title;
+                editedTodo.IsCompleted = todo.IsCompleted;
 
                 return Todos;
             }

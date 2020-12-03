@@ -16,9 +16,10 @@ namespace TODODesktopUI.ViewsModels
 
         private readonly ITodosService _todosService;
 
-        private ICommand _editTodoCommand;
-        private ICommand _deleteTodoCommand;
         private ICommand _addTodoCommand;
+        private ICommand _editTodoCommand;
+        private ICommand _editCheckBoxCommand;
+        private ICommand _deleteTodoCommand;
 
         public ObservableCollection<Todo> Todos
         {
@@ -32,9 +33,10 @@ namespace TODODesktopUI.ViewsModels
             set => Set(ref _newTodoTitle, value);
         }
 
-        public ICommand EditTodoCommand => _editTodoCommand ?? (_editTodoCommand = new RelayCommand<Todo>(EditTodo, true));
-        public ICommand DeleteTodoCommand => _deleteTodoCommand ?? (_deleteTodoCommand = new RelayCommand<Todo>(DeleteTodo, true));
         public ICommand AddTodoCommand => _addTodoCommand ?? (_addTodoCommand = new RelayCommand(AddTodo, CanAddTodo));
+        public ICommand EditTodoCommand => _editTodoCommand ?? (_editTodoCommand = new RelayCommand<Todo>(EditTodo, true));
+        public ICommand EditCheckBoxCommand => _editCheckBoxCommand ?? (_editCheckBoxCommand = new RelayCommand<Todo>(EditCheckbox, true));
+        public ICommand DeleteTodoCommand => _deleteTodoCommand ?? (_deleteTodoCommand = new RelayCommand<Todo>(DeleteTodo, true));
 
         public MyTodosViewModel(ITodosService todosService)
         {
@@ -90,6 +92,13 @@ namespace TODODesktopUI.ViewsModels
                 Todos = new ObservableCollection<Todo>(todolist);
             }
 
+        }
+
+        private async void EditCheckbox(Todo todo)
+        {
+
+            var todolist = await _todosService.Update(todo);
+            Todos = new ObservableCollection<Todo>(todolist);
         }
 
     }
