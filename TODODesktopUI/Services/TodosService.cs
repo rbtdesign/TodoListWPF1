@@ -13,10 +13,6 @@ namespace TODODesktopUI.Services
     public class TodosService : ITodosService
     {
 
-        static TodosService()
-        {
-        }
-
         public async Task<List<Todo>> GetAll()
         {
             string url = "api/todos/";

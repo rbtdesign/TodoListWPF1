@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TODODesktopUI.Library;
 using TODODesktopUI.Views;
 using TODODesktopUI.ViewsModels;
@@ -13,7 +14,7 @@ namespace TODODesktopUI.Helpers
     {
 
         private static volatile DialogService _instance;
-        private static object _syncroot = new object();
+        private readonly static object _syncroot = new object();
         private EditModalView EditModalView { get; set; }
 
         private DialogService()
@@ -76,13 +77,13 @@ namespace TODODesktopUI.Helpers
         //    }
         //}
 
-        //public bool ShowConfirmDialog()
-        //{
-        //    var messageBoxResult = MessageBox.Show("Are you sure you want to remove the selected record?", "Delete item",
-        //        MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+        public bool ShowConfirmDialog()
+        {
+            var messageBoxResult = MessageBox.Show("Are you sure you want to remove the selected item?", "Delete item",
+                MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
 
-        //    return messageBoxResult == MessageBoxResult.Yes;
-        //}
+            return messageBoxResult == MessageBoxResult.Yes;
+        }
 
         //public string ShowOpenFileDialog()
         //{

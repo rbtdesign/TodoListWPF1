@@ -16,12 +16,12 @@ using TODODesktopUI.Services;
 
 namespace TODODesktopUI.ViewsModels
 {
-    class MyTodosViewModel : ViewModelBase
+    public class MyTodosViewModel : ViewModelBase
     {
         private ObservableCollection<Todo> _todos;
         private string _newTodoTitle;
 
-        private readonly TodosService _todosService;
+        private readonly ITodosService _todosService;
 
         private ICommand _editTodoCommand;
         private ICommand _deleteTodoCommand;
@@ -43,17 +43,17 @@ namespace TODODesktopUI.ViewsModels
         public ICommand DeleteTodoCommand => _deleteTodoCommand ?? (_deleteTodoCommand = new RelayCommand<Todo>(DeleteTodo, true));
         public ICommand AddTodoCommand => _addTodoCommand ?? (_addTodoCommand = new RelayCommand(AddTodo, CanAddTodo));
 
-        public MyTodosViewModel()
+        public MyTodosViewModel(ITodosService todosService)
         {
 
-            // TodosService todosService >> keep for DI
+            // ITodosService todosService >> keep for DI
 
             // Initialize http client 
             ApiHelper.InitializeClient();
 
-            // Instancie Todoprocessor
-            //_todosService = todosService;
-            _todosService = new TodosService();
+            // Instancie todosService with DI
+            // Alternative : _todosService = new TodosService();
+            _todosService = todosService;
 
             //Fetch inital data
             GetTodos();
@@ -83,11 +83,17 @@ namespace TODODesktopUI.ViewsModels
 
         private async void DeleteTodo(Todo todo)
         {
-            bool isConfirmed = await _todosService.Delete(todo.Id);
-            if (isConfirmed)
-                Todos.Remove(todo);
+            bool isConfirmed = DialogService.Instance.ShowConfirmDialog();
+
+            if(isConfirmed)
+            {
+                bool isDeleted = await _todosService.Delete(todo.Id);
+                if (isDeleted)
+                    Todos.Remove(todo);
+            }
+
         }
-        //private EditModalView EditModalView { get; set; }
+
         private async void EditTodo(Todo todo)
         {
 

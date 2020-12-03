@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\DialogService.cs" />
+    <Compile Include="Helpers\ViewModelLocator.cs" />
     <Compile Include="Services\ITodosService.cs" />
     <Compile Include="Services\TodosService.cs" />
     <Compile Include="ViewsModels\EditModalViewModel.cs" />
