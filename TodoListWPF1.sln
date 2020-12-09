@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODODesktopUI", "TODODeskto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODOWebAPI", "TODOWebAPI\TODOWebAPI.csproj", "{76F8D604-067A-4FDD-B44F-96125735ABBD}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TODOSqlDb", "TODOData\TODOSqlDb.sqlproj", "{DF9D225A-5C27-47C7-A647-B4668319FC2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,12 @@ Global
 		{76F8D604-067A-4FDD-B44F-96125735ABBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76F8D604-067A-4FDD-B44F-96125735ABBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76F8D604-067A-4FDD-B44F-96125735ABBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9D225A-5C27-47C7-A647-B4668319FC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9D225A-5C27-47C7-A647-B4668319FC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9D225A-5C27-47C7-A647-B4668319FC2C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DF9D225A-5C27-47C7-A647-B4668319FC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9D225A-5C27-47C7-A647-B4668319FC2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9D225A-5C27-47C7-A647-B4668319FC2C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
