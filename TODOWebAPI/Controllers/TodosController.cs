@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using TODODesktopUI.Library;
+using TODOWebAPI.DataAccess;
+using TODOWebAPI.Models;
 
 namespace TODOWebAPI.Controllers
 {
@@ -29,21 +31,29 @@ namespace TODOWebAPI.Controllers
 
 
         // GET: api/Todos
-        public List<Todo> Get()
+        public List<TodoModel> Get()
         {
 
-            if (Todos == null)
-            {
-                var message = string.Format("No todos found");
+            //if (Todos == null)
+            //{
+            //    var message = string.Format("No todos found");
 
-                // HttpResponseException allos us to still be able to return a strong typed model
-                throw new HttpResponseException(
-                    Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
-            }
-            else
-            {
-                return Todos;
-            }
+            //    // HttpResponseException allos us to still be able to return a strong typed model
+            //    throw new HttpResponseException(
+            //        Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+            //}
+            //else
+            //{
+            //    return Todos;
+            //}
+
+            TodoData data = new TodoData();
+
+            var output = data.GetAllTodos();
+
+            return output;
+
+
         }
 
         //GET: api/Todos/5

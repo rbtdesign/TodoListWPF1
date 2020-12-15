@@ -15,7 +15,7 @@ namespace TODODesktopUI.Library
         public string Title { get; set; }
         public bool IsCompleted { get; set; } = false;
 
-        public static int Counter { get; set; }
+        //public static int Counter { get; set; }
 
         public Todo()
         {
