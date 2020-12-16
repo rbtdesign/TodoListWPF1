@@ -59,9 +59,11 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="PublishedLocations" />
+    <Folder Include="dbo\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Todos.sql" />
+    <Build Include="dbo\Stored Procedures\spGetAllTodos.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishedLocations\LocalDemoDB.publish.xml" />

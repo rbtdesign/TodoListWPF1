@@ -19,7 +19,7 @@ namespace TODOWebAPI.DataAccess
 
             using (SqlConnection con = new SqlConnection(CS))
             {
-                SqlCommand cmd = new SqlCommand("Select * from Todos", con);
+                SqlCommand cmd = new SqlCommand("spGetAllTodos", con);
                 cmd.Connection = con;
                 con.Open();
 
