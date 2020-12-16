@@ -64,6 +64,9 @@
   <ItemGroup>
     <Build Include="dbo\Tables\Todos.sql" />
     <Build Include="dbo\Stored Procedures\spGetAllTodos.sql" />
+    <Build Include="dbo\Stored Procedures\spGetTodoById.sql" />
+    <Build Include="dbo\Stored Procedures\spDeleteTodoById.sql" />
+    <Build Include="dbo\Stored Procedures\spAddTodo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishedLocations\LocalDemoDB.publish.xml" />

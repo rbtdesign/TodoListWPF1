@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TODODesktopUI.Helpers;
-using TODODesktopUI.Library;
+using TODODesktopUI.Models;
 using TODODesktopUI.Views;
 
 namespace TODODesktopUI.ViewsModels

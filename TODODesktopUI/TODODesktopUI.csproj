@@ -83,6 +83,7 @@
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\DialogService.cs" />
     <Compile Include="Helpers\ViewModelLocator.cs" />
+    <Compile Include="Models\Todo.cs" />
     <Compile Include="Services\ITodosService.cs" />
     <Compile Include="Services\TodosService.cs" />
     <Compile Include="ViewsModels\EditModalViewModel.cs" />
@@ -122,12 +123,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TODODesktopUI.Library\TODODesktopUI.Library.csproj">
-      <Project>{1a742dcf-a90b-4830-861f-2ff2c52d44ff}</Project>
-      <Name>TODODesktopUI.Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Views\EditModalView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,5 +132,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

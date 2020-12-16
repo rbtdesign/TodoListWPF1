@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TODODesktopUI.Library
+namespace TODODesktopUI.Models
 {
-    public class Todo 
+    public class Todo
     {
 
         public int Id { get; set; }

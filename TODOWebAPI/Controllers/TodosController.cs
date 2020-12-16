@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using TODODesktopUI.Library;
 using TODOWebAPI.DataAccess;
 using TODOWebAPI.Models;
 
@@ -13,17 +12,6 @@ namespace TODOWebAPI.Controllers
     public class TodosController : ApiController
     {
         // Demo data Initialization
-        private static List<Todo> Todos = new List<Todo>();
-        private static int count = 4;
-
-        static TodosController()
-        {
-            Todos.Add(new Todo() { Title = "Todo 1", Id = 1, IsCompleted = true });
-            Todos.Add(new Todo() { Title = "Todo 2", Id = 2, IsCompleted = false });
-            Todos.Add(new Todo() { Title = "Todo 3", Id = 3, IsCompleted = true });
-            Todos.Add(new Todo() { Title = "Todo 4", Id = 4, IsCompleted = true });
-        }
-
         // You can precise Route with 
         // [Route("api/Todos/GetXXX")] // Apply on the following command, names don't have to match
         // [HttpGet] // Precise the type of command it accept
@@ -60,9 +48,13 @@ namespace TODOWebAPI.Controllers
         public HttpResponseMessage Get(int id)
         {
 
-            var item = Todos.Where(x => x.Id == id).FirstOrDefault();
+            //var item = Todos.Where(x => x.Id == id).FirstOrDefault();
 
-            if (item == null)
+            TodoData data = new TodoData();
+
+            var todo = data.GetTodoById(id);
+
+            if (todo == null)
             {
                 var message = string.Format("Product with id = {0} not found", id);
                 HttpError err = new HttpError(message);
@@ -71,8 +63,9 @@ namespace TODOWebAPI.Controllers
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.OK, item);
+                return Request.CreateResponse(HttpStatusCode.OK, todo);
             }
+
         }
 
         // POST: api/Todos
@@ -87,57 +80,73 @@ namespace TODOWebAPI.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, err);
             }
-            else
-            {
-                // Logic to add new todo to fake db
-                count++; // Increase counter for fake ID
-                Todo todo = new Todo() { Title = title, Id = count };
-                Todos.Add(todo); // Add to fake DB
 
-                return Request.CreateResponse(HttpStatusCode.OK, todo);
+
+            try
+            {
+                TodoData data = new TodoData();
+                int id = data.AddTodo(title);
+
+                return Request.CreateResponse(HttpStatusCode.OK, id);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
 
-        // PUT: api/Todos
-        public List<Todo> Put([FromBody] Todo todo)
-        {
-
-            var editedTodo = Todos.FirstOrDefault(t => t.Id == todo.Id);
-
-            if (editedTodo == default)
-            {
-                var message = string.Format("Todo with id = {0} was not updated", todo.Id);
-
-                throw new HttpResponseException(
-                    Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
-            }
-            else
-            {
-                editedTodo.Title = todo.Title;
-                editedTodo.IsCompleted = todo.IsCompleted;
-
-                return Todos;
-            }
-
-        }
-
-        // DELETE: api/Todos/5
+        //DELETE: api/Todos/5
         public HttpResponseMessage Delete(int id)
         {
-            var isDeleted = Todos.Remove(Todos.Where(x => x.Id == id).FirstOrDefault());
+            //var isDeleted = Todos.Remove(Todos.Where(x => x.Id == id).FirstOrDefault());
 
-            if (isDeleted)
+            TodoData data = new TodoData();
+
+            int isDeleted = data.DeleteTodoById(id);
+
+            if (isDeleted > 0)
             {
                 return Request.CreateResponse(HttpStatusCode.NoContent);
             }
             else
             {
-                var message = string.Format("Todo with id = {0} was not deleted", id);
+                var message = string.Format("Todo {0} was not deleted", id);
                 HttpError err = new HttpError(message);
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, err);
             }
 
+
+
         }
     }
 }
+
+//    // PUT: api/Todos
+//    public List<TodoModel> Put([FromBody] TodoModel todo)
+//    {
+
+//        //var editedTodo = Todos.FirstOrDefault(t => t.Id == todo.Id);
+
+//        //if (editedTodo == default)
+//        //{
+//        //    var message = string.Format("Todo with id = {0} was not updated", todo.Id);
+
+//        //    throw new HttpResponseException(
+//        //        Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+//        //}
+//        //else
+//        //{
+//        //    editedTodo.Title = todo.Title;
+//        //    editedTodo.IsCompleted = todo.IsCompleted;
+
+//        //    return Todos;
+//        //}
+
+
+
+//    }
+
+
+
+

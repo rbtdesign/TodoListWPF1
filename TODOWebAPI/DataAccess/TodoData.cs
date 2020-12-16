@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using TODOWebAPI.Models;
 
 namespace TODOWebAPI.DataAccess
@@ -20,11 +18,7 @@ namespace TODOWebAPI.DataAccess
             using (SqlConnection con = new SqlConnection(CS))
             {
                 SqlCommand cmd = new SqlCommand("spGetAllTodos", con);
-                cmd.Connection = con;
                 con.Open();
-
-                //SqlDataReader output = cmd.ExecuteReader();
-
 
                 using (var dataReader = cmd.ExecuteReader())
                 {
@@ -45,6 +39,78 @@ namespace TODOWebAPI.DataAccess
 
         }
 
+        public TodoModel GetTodoById(int id)
+        {
+
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlCommand cmd = new SqlCommand("spGetTodoById", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", id);
+
+                con.Open();
+
+                using (var dataReader = cmd.ExecuteReader())
+                {
+
+                    string title = dataReader["Title"].ToString();
+                    bool isCompleted = (bool)dataReader["IsCompleted"];
+
+                    return new TodoModel(id, title, isCompleted);
+                }
+            }
+        }
+
+
+        public int AddTodo(string title)
+        {
+
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlCommand cmd = new SqlCommand("spAddTodo", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@title", title);
+
+
+                //SqlParameter outputParam = new SqlParameter();
+                //outputParam.ParameterName = "@Id";
+                //outputParam.SqlDbType = SqlDbType.Int;
+                //outputParam.Direction = ParameterDirection.Output;
+                //cmd.Parameters.Add(outputParam);
+
+                con.Open();
+
+                int id = (int)cmd.ExecuteScalar();
+
+                return id;
+
+            }
+        }
+
+
+        public int DeleteTodoById(int id)
+        {
+
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlCommand cmd = new SqlCommand("spDeleteTodoById", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Connection = con;
+                con.Open();
+
+                int response = cmd.ExecuteNonQuery();
+
+                return response;
+
+            }
+        }
 
     }
 }

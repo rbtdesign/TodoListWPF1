@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using TODODesktopUI.Library;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
 using TODODesktopUI.Helpers;
 using TODODesktopUI.Services;
+using TODODesktopUI.Models;
 
 namespace TODODesktopUI.ViewsModels
 {
@@ -62,9 +62,10 @@ namespace TODODesktopUI.ViewsModels
 
         private async void AddTodo()
         {
-            Todo todo = await _todosService.Create(_newTodoTitle);
+            await _todosService.Create(_newTodoTitle);
 
-            Todos.Add(todo);
+            GetTodos();
+
             NewTodoTitle = string.Empty;
        
         }

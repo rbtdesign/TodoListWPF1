@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using TODODesktopUI.Helpers;
-using TODODesktopUI.Library;
+using TODODesktopUI.Models;
 
 namespace TODODesktopUI.Services
 {
@@ -32,7 +32,26 @@ namespace TODODesktopUI.Services
             }
         }
 
-        public async Task<Todo> Create(string todoTitle)
+        public async Task<Todo> Get(int id)
+        {
+            string url = "api/todos/{id}";
+
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    Todo todo = await response.Content.ReadAsAsync<Todo>();
+
+                    return todo;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<int> Create(string todoTitle)
         {
             string url = "api/todos/";
 
@@ -45,9 +64,9 @@ namespace TODODesktopUI.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Todo newTodo = await response.Content.ReadAsAsync<Todo>();
+                    int id = await response.Content.ReadAsAsync<int>();
 
-                    return newTodo;
+                    return id;
                 }
                 else
                 {
