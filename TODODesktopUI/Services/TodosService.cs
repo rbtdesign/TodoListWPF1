@@ -75,7 +75,7 @@ namespace TODODesktopUI.Services
             }
         }
 
-        public async Task<List<Todo>> Update(Todo todo)
+        public async Task<bool> Update(Todo todo)
         {
             string url = "api/todos/";
 
@@ -88,13 +88,14 @@ namespace TODODesktopUI.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    List<Todo> todolist = await response.Content.ReadAsAsync<List<Todo>>();
+                    await response.Content.ReadAsAsync<List<Todo>>();
 
-                    return todolist;
+                    return true;
                 }
                 else
                 {
-                    throw new Exception(response.ReasonPhrase);
+                    // throw new Exception(response.ReasonPhrase); Find a better way to deal with error
+                    return false;
                 }
             }
         }

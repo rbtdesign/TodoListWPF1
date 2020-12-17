@@ -95,6 +95,44 @@ namespace TODOWebAPI.Controllers
             }
         }
 
+        // PUT: api/Todos
+        public HttpResponseMessage Put([FromBody] TodoModel todo)
+        {
+
+            //var editedTodo = Todos.FirstOrDefault(t => t.Id == todo.Id);
+
+            //if (editedTodo == default)
+            //{
+            //    var message = string.Format("Todo with id = {0} was not updated", todo.Id);
+
+            //    throw new HttpResponseException(
+            //        Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+            //}
+            //else
+            //{
+            //    editedTodo.Title = todo.Title;
+            //    editedTodo.IsCompleted = todo.IsCompleted;
+
+            //    return Todos;
+            //}
+
+            try
+            {
+                TodoData data = new TodoData();
+                
+                data.UpdateTodo(todo);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+
+
+        }
+
         //DELETE: api/Todos/5
         public HttpResponseMessage Delete(int id)
         {
@@ -122,30 +160,7 @@ namespace TODOWebAPI.Controllers
     }
 }
 
-//    // PUT: api/Todos
-//    public List<TodoModel> Put([FromBody] TodoModel todo)
-//    {
 
-//        //var editedTodo = Todos.FirstOrDefault(t => t.Id == todo.Id);
-
-//        //if (editedTodo == default)
-//        //{
-//        //    var message = string.Format("Todo with id = {0} was not updated", todo.Id);
-
-//        //    throw new HttpResponseException(
-//        //        Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
-//        //}
-//        //else
-//        //{
-//        //    editedTodo.Title = todo.Title;
-//        //    editedTodo.IsCompleted = todo.IsCompleted;
-
-//        //    return Todos;
-//        //}
-
-
-
-//    }
 
 
 

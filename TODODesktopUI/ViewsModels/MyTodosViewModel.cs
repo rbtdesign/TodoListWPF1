@@ -72,7 +72,9 @@ namespace TODODesktopUI.ViewsModels
 
         private async void DeleteTodo(Todo todo)
         {
-            bool isConfirmed = DialogService.Instance.ShowConfirmDialog();
+            //bool isConfirmed = DialogService.Instance.ShowConfirmDialog();
+
+            bool isConfirmed = true;
 
             if(isConfirmed)
             {
@@ -89,8 +91,11 @@ namespace TODODesktopUI.ViewsModels
 
             if (returnedTodo != null)
             {
-                var todolist = await _todosService.Update(returnedTodo);
-                Todos = new ObservableCollection<Todo>(todolist);
+                bool isEdited = await _todosService.Update(returnedTodo);
+
+                if(isEdited)
+                    GetTodos();
+            
             }
 
         }
@@ -98,8 +103,9 @@ namespace TODODesktopUI.ViewsModels
         private async void EditCheckbox(Todo todo)
         {
 
-            var todolist = await _todosService.Update(todo);
-            Todos = new ObservableCollection<Todo>(todolist);
+            bool isEdited = await _todosService.Update(todo);
+            if (isEdited)
+                GetTodos();
         }
 
     }

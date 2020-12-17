@@ -91,6 +91,37 @@ namespace TODOWebAPI.DataAccess
             }
         }
 
+        public int UpdateTodo(TodoModel Todo)
+        {
+
+            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlCommand cmd = new SqlCommand("spUpdateTodo", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", Todo.Id);
+                cmd.Parameters.AddWithValue("@title", Todo.Title);
+                cmd.Parameters.AddWithValue("@isCompleted", Todo.IsCompleted);
+
+
+                //SqlParameter outputParam = new SqlParameter();
+                //outputParam.ParameterName = "@Id";
+                //outputParam.SqlDbType = SqlDbType.Int;
+                //outputParam.Direction = ParameterDirection.Output;
+                //cmd.Parameters.Add(outputParam);
+
+                con.Open();
+
+                int id = cmd.ExecuteNonQuery(); // Row affected // Should be 1
+
+                return id;
+
+            }
+        }
+
+
+
 
         public int DeleteTodoById(int id)
         {

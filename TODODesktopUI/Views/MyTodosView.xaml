@@ -62,7 +62,7 @@
 
 
                         <CheckBox IsChecked="{Binding IsCompleted}"
-                                  Command="{Binding DataContext.UpdateTodoCheckBoxCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                  Command="{Binding DataContext.EditCheckBoxCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                   CommandParameter="{Binding}"
                                   Grid.Column="0"
                                   Margin="10 0" 
