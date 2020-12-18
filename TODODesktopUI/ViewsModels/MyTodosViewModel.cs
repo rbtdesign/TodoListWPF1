@@ -6,6 +6,7 @@ using System.Windows.Input;
 using TODODesktopUI.Helpers;
 using TODODesktopUI.Services;
 using TODODesktopUI.Models;
+using System.Threading.Tasks;
 
 namespace TODODesktopUI.ViewsModels
 {
@@ -67,21 +68,15 @@ namespace TODODesktopUI.ViewsModels
             GetTodos();
 
             NewTodoTitle = string.Empty;
-       
+
         }
 
         private async void DeleteTodo(Todo todo)
         {
-            //bool isConfirmed = DialogService.Instance.ShowConfirmDialog();
 
-            bool isConfirmed = true;
+            await _todosService.Delete(todo.Id);
+            Todos.Remove(todo);
 
-            if(isConfirmed)
-            {
-                bool isDeleted = await _todosService.Delete(todo.Id);
-                if (isDeleted)
-                    Todos.Remove(todo);
-            }
 
         }
 
@@ -91,22 +86,20 @@ namespace TODODesktopUI.ViewsModels
 
             if (returnedTodo != null)
             {
-                bool isEdited = await _todosService.Update(returnedTodo);
+                await _todosService.Update(returnedTodo);
 
-                if(isEdited)
-                    GetTodos();
-            
+                GetTodos();
             }
 
         }
 
         private async void EditCheckbox(Todo todo)
         {
+            await _todosService.Update(todo);
 
-            bool isEdited = await _todosService.Update(todo);
-            if (isEdited)
-                GetTodos();
+            GetTodos();
         }
+
 
     }
 }

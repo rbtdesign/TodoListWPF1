@@ -9,8 +9,8 @@ namespace TODODesktopUI.Services
     {
         Task<List<Todo>> GetAll();
         Task<Todo> Get(int id);
-        Task<int> Create(string todoTitle);
-        Task<bool> Update(Todo todo);
-        Task<bool> Delete(int id);
+        Task Create(string todoTitle);
+        Task Update(Todo todo);
+        Task Delete(int id);
     }
 }

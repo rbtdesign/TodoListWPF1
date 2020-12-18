@@ -13,10 +13,10 @@ namespace TODODesktopUI.Services
     public class TodosService : ITodosService
     {
 
+        private string url = "api/todos/";
+
         public async Task<List<Todo>> GetAll()
         {
-            string url = "api/todos/";
-
             using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
@@ -34,9 +34,8 @@ namespace TODODesktopUI.Services
 
         public async Task<Todo> Get(int id)
         {
-            string url = "api/todos/{id}";
 
-            using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url + id))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -51,70 +50,31 @@ namespace TODODesktopUI.Services
             }
         }
 
-        public async Task<int> Create(string todoTitle)
+        public async Task Create(string todoTitle)
         {
-            string url = "api/todos/";
 
             // Convert string to HttpContent
             string json = JsonConvert.SerializeObject(todoTitle);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using (HttpResponseMessage response = await ApiHelper.ApiClient.PostAsync(url, stringContent))
-            {
-
-                if (response.IsSuccessStatusCode)
-                {
-                    int id = await response.Content.ReadAsAsync<int>();
-
-                    return id;
-                }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase);
-                }
-            }
+            //HttpResponseMessage response = 
+            await ApiHelper.ApiClient.PostAsync(url, stringContent);
         }
 
-        public async Task<bool> Update(Todo todo)
+        public async Task Update(Todo todo)
         {
-            string url = "api/todos/";
 
             // Convert string to HttpContent
             string json = JsonConvert.SerializeObject(todo);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using (HttpResponseMessage response = await ApiHelper.ApiClient.PutAsync(url, stringContent))
-            {
-
-                if (response.IsSuccessStatusCode)
-                {
-                    await response.Content.ReadAsAsync<List<Todo>>();
-
-                    return true;
-                }
-                else
-                {
-                    // throw new Exception(response.ReasonPhrase); Find a better way to deal with error
-                    return false;
-                }
-            }
+            await ApiHelper.ApiClient.PutAsync(url, stringContent);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
-            string url = $"api/todos/{id}";
+            await ApiHelper.ApiClient.DeleteAsync(url + id);
 
-            using (HttpResponseMessage response = await ApiHelper.ApiClient.DeleteAsync(url))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase);
-                }
-            }
         }
     }
 }
