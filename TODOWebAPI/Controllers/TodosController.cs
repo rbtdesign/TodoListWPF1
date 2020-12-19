@@ -11,7 +11,6 @@ namespace TODOWebAPI.Controllers
 {
     public class TodosController : ApiController
     {
-        // Demo data Initialization
         // You can precise Route with 
         // [Route("api/Todos/GetXXX")] // Apply on the following command, names don't have to match
         // [HttpGet] // Precise the type of command it accept
@@ -99,23 +98,6 @@ namespace TODOWebAPI.Controllers
         public HttpResponseMessage Put([FromBody] TodoModel todo)
         {
 
-            //var editedTodo = Todos.FirstOrDefault(t => t.Id == todo.Id);
-
-            //if (editedTodo == default)
-            //{
-            //    var message = string.Format("Todo with id = {0} was not updated", todo.Id);
-
-            //    throw new HttpResponseException(
-            //        Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
-            //}
-            //else
-            //{
-            //    editedTodo.Title = todo.Title;
-            //    editedTodo.IsCompleted = todo.IsCompleted;
-
-            //    return Todos;
-            //}
-
             try
             {
                 TodoData data = new TodoData();
@@ -128,8 +110,6 @@ namespace TODOWebAPI.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-
-
 
         }
 
