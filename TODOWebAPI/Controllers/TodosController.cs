@@ -18,6 +18,7 @@ namespace TODOWebAPI.Controllers
 
 
         // GET: api/Todos
+        [HttpGet]
         public List<TodoModel> Get()
         {
 
@@ -44,6 +45,7 @@ namespace TODOWebAPI.Controllers
         }
 
         //GET: api/Todos/5
+        [HttpGet]
         public HttpResponseMessage Get(int id)
         {
 
@@ -68,6 +70,7 @@ namespace TODOWebAPI.Controllers
         }
 
         // POST: api/Todos
+        [HttpPost]
         public HttpResponseMessage Post([FromBody] string title)
         {
             // Logic to verify title
@@ -95,6 +98,7 @@ namespace TODOWebAPI.Controllers
         }
 
         // PUT: api/Todos
+        [HttpPut]
         public HttpResponseMessage Put([FromBody] TodoModel todo)
         {
 
@@ -114,6 +118,7 @@ namespace TODOWebAPI.Controllers
         }
 
         //DELETE: api/Todos/5
+        [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
             //var isDeleted = Todos.Remove(Todos.Where(x => x.Id == id).FirstOrDefault());
