@@ -11,14 +11,10 @@ namespace TODOWebAPI.Controllers
 {
     public class TodosController : ApiController
     {
-        // You can precise Route with 
-        // [Route("api/Todos/GetXXX")] // Apply on the following command, names don't have to match
-        // [HttpGet] // Precise the type of command it accept
-        // [Route("api/Todos/GetXXX/{userId:int"/{age:int})] // Add parameter
-
 
         // GET: api/Todos
         [HttpGet]
+        [Route("api/Todos/test/")]
         public List<TodoModel> Get()
         {
 
