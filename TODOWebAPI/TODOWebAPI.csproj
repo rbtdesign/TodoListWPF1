@@ -157,11 +157,12 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TodosController.cs" />
+    <Compile Include="DataAccess\ITodoData.cs" />
     <Compile Include="DataAccess\TodoData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\TodoModel.cs" />
+    <Compile Include="Models\TodoDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

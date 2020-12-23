@@ -6,14 +6,15 @@ using TODOWebAPI.Models;
 
 namespace TODOWebAPI.DataAccess
 {
-    public class TodoData
+    public class TodoData : ITodoData
     {
-        public List<TodoModel> GetAllTodos()
+
+        private readonly string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+
+        public List<TodoDto> GetAllTodos()
         {
 
-            List<TodoModel> output = new List<TodoModel>();
-
-            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            List<TodoDto> output = new List<TodoDto>();
 
             using (SqlConnection con = new SqlConnection(CS))
             {
@@ -28,7 +29,7 @@ namespace TODOWebAPI.DataAccess
                         string title = dataReader["Title"].ToString();
                         bool isCompleted = (bool)dataReader["IsCompleted"];
 
-                        output.Add(new TodoModel(id, title, isCompleted));
+                        output.Add(new TodoDto(id, title, isCompleted));
 
                     }
                 }
@@ -39,11 +40,8 @@ namespace TODOWebAPI.DataAccess
 
         }
 
-        public TodoModel GetTodoById(int id)
+        public TodoDto GetTodoById(int id)
         {
-
-            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-
             using (SqlConnection con = new SqlConnection(CS))
             {
                 SqlCommand cmd = new SqlCommand("spGetTodoById", con);
@@ -54,11 +52,16 @@ namespace TODOWebAPI.DataAccess
 
                 using (var dataReader = cmd.ExecuteReader())
                 {
-
-                    string title = dataReader["Title"].ToString();
+                    if(dataReader.Read())
+                    {
+                    string title = (string)dataReader["Title"];
                     bool isCompleted = (bool)dataReader["IsCompleted"];
 
-                    return new TodoModel(id, title, isCompleted);
+                    return new TodoDto(id, title, isCompleted);
+                    }
+
+                    return null;
+
                 }
             }
         }
@@ -66,21 +69,11 @@ namespace TODOWebAPI.DataAccess
 
         public int AddTodo(string title)
         {
-
-            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-
             using (SqlConnection con = new SqlConnection(CS))
             {
                 SqlCommand cmd = new SqlCommand("spAddTodo", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@title", title);
-
-
-                //SqlParameter outputParam = new SqlParameter();
-                //outputParam.ParameterName = "@Id";
-                //outputParam.SqlDbType = SqlDbType.Int;
-                //outputParam.Direction = ParameterDirection.Output;
-                //cmd.Parameters.Add(outputParam);
 
                 con.Open();
 
@@ -91,11 +84,8 @@ namespace TODOWebAPI.DataAccess
             }
         }
 
-        public int UpdateTodo(TodoModel Todo)
+        public int UpdateTodo(TodoDto Todo)
         {
-
-            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-
             using (SqlConnection con = new SqlConnection(CS))
             {
                 SqlCommand cmd = new SqlCommand("spUpdateTodo", con);
@@ -113,21 +103,13 @@ namespace TODOWebAPI.DataAccess
 
                 con.Open();
 
-                int id = cmd.ExecuteNonQuery(); // Row affected // Should be 1
-
-                return id;
+                return cmd.ExecuteNonQuery(); ;
 
             }
         }
 
-
-
-
         public int DeleteTodoById(int id)
         {
-
-            string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-
             using (SqlConnection con = new SqlConnection(CS))
             {
                 SqlCommand cmd = new SqlCommand("spDeleteTodoById", con);
@@ -136,12 +118,8 @@ namespace TODOWebAPI.DataAccess
                 cmd.Connection = con;
                 con.Open();
 
-                int response = cmd.ExecuteNonQuery();
-
-                return response;
-
+                return cmd.ExecuteNonQuery();
             }
         }
-
     }
 }
